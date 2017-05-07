@@ -27,6 +27,9 @@ int ButtonCounter = 0;
 void setup()
 {
 	pinMode(StatusLed, OUTPUT);
+	pinMode(Play_E, OUTPUT);
+	pinMode(Play_L, OUTPUT);
+	pinMode(Record, OUTPUT);
 	pinMode(AIA, OUTPUT);
 	pinMode(AIB, OUTPUT);
 	pinMode(BIA, OUTPUT);
@@ -102,17 +105,19 @@ void loop()
 			endPressed = millis();
 			timeHold = endPressed - startPressed;
 
-			Serial.print("Time Hold Duration:");
-			Serial.println(timeHold);
+			if (timeHold > 25000)
+			{
+				digitalWrite(Play_L, HIGH);
+			}
 		}
 	}
 
 
 	if (currentMillis - previousMillis >= interval) {
-		// save the last time you blinked the LED
+		
 		previousMillis = currentMillis;
 
-		// if the LED is off turn it on and vice-versa:
+		
 		if (LedState == LOW) {
 			LedState = HIGH;
 			
@@ -123,7 +128,7 @@ void loop()
 
 		}
 
-		// set the LED with the ledState of the variable:
+	
 		digitalWrite(StatusLed, LedState);
 	}
 
